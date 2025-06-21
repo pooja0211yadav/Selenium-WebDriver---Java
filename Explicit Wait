@@ -1,0 +1,46 @@
+package SelPackage;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+import java.time.Duration;
+
+public class Dropdown {
+    public static void main(String[] args) {
+        WebDriverManager.chromedriver().setup(); 
+        WebDriver driver = new ChromeDriver();
+
+        // Create WebDriverWait object with 10 seconds timeout
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        driver.get("https://www.spicejet.com/");
+
+        // Wait and click on "From"
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[text()='From']"))).click();
+
+        // Wait and select "Kempegowda International Airport"
+        WebElement fromElement = wait.until(
+            ExpectedConditions.elementToBeClickable(By.xpath("//div[text()='Kempegowda International Airport']"))
+        );
+        String fromText = fromElement.getText();
+        fromElement.click();
+        System.out.println("From: " + fromText);
+
+        // Wait and select "Bhavnagar"
+        WebElement toElement = wait.until(
+            ExpectedConditions.elementToBeClickable(By.xpath("//div[text()='Bhavnagar']"))
+        );
+        String toText = toElement.getText();
+        toElement.click();
+        System.out.println("To: " + toText);
+
+        driver.quit();
+    }
+}
